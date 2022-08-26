@@ -18,7 +18,11 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 COPY java.tar.gz /java.tar.gz
 
-RUN mkdir /var/lib/jvm && cd /var/lib/jvm && tar -zxf /java.tar.gz && update-alternatives --install /usr/bin/java java /var/lib/jvm/jre1.8.0_341/bin/java 1 && rm /java.tar.gz
+RUN mkdir /var/lib/jvm && \
+    cd /var/lib/jvm && \
+    tar -zxf /java.tar.gz && \
+    update-alternatives --install "/usr/bin/java" "java" "/var/lib/jvm/jre1.8.0_341/bin/java" 1 && \
+    rm /java.tar.gz
 
 EXPOSE 80
 

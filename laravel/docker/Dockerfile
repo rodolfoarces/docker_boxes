@@ -1,0 +1,25 @@
+FROM ubuntu:jammy
+
+WORKDIR var/www/html
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Asuncion
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt update -y && \
+    apt -y install software-properties-common apache2 libapache2-mod-fcgid composer && \
+    a2enmod rewrite headers actions fcgid alias proxy_fcgi
+
+RUN apt install -y php php-cli php-json php-common \
+    php-pgsql php-zip php-gd php-mbstring php-curl php-xml
+
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
+COPY java.tar.gz /java.tar.gz
+
+RUN mkdir /var/lib/jvm && cd /var/lib/jvm && tar -zxf /java.tar.gz && update-alternatives --install /usr/bin/java java /var/lib/jvm/jre1.8.0_341/bin/java 1 && rm /java.tar.gz
+
+EXPOSE 80
+
+ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]

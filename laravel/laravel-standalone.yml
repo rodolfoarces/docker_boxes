@@ -12,3 +12,8 @@ services:
       - "./storage/logs:/var/log/apache2"
     ports:
       - 8080:80
+    networks:
+      - laravel
+networks:
+  laravel:
+    driver: bridge

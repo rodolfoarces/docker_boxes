@@ -2,10 +2,13 @@ version: '3.8'
 
 services:
   app:
-    build: ./docker
+    build:
+      context: ./docker
+      dockerfile: app-dockerfile
     container_name: app
     image: app:latest
     volumes:
-      - "./:/var/www/html/"
+      - "./:/var/www/html"
+      - "./storage/logs:/var/log/apache2"
     ports:
       - 8080:80

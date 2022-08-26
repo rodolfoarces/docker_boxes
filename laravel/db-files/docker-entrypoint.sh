@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Based on: https://raw.githubusercontent.com/docker-library/postgres/master/14/bullseye/docker-entrypoint.sh
 
 set -Eeo pipefail
